@@ -24,7 +24,14 @@ router.post("/register", async (req, res) => {
           process.env.JWT_SEC,
           { expiresIn: "3d" }
         );
-    res.status(201).json(savedUser,accessToken);
+    const userWithAccessToken = {
+      ...savedUser.toObject(),
+      accessToken: accessToken,
+    };
+
+    console.log("call register");
+    console.log(userWithAccessToken);
+    res.status(201).json(userWithAccessToken);
   } catch (err) {
     res.status(500).json(err);
   }
